@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class buttonScript : MonoBehaviour
 {
+
+    private void OnMouseUpAsButton()
+    {
+        home();
+    }
     public void home()
     {
         SceneManager.LoadScene("Home");

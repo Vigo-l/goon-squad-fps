@@ -44,14 +44,20 @@ public class Gun : MonoBehaviour
     private bool CanShoot() => !gunData.reloading && timeSinceLastShot > 1f / (gunData.fireRate / 60f);
     public void Shoot()
     {
+        RaycastHit hit;
         if (gunData.currentAmmo > 0)
         {
             if (CanShoot())
             {
-                if (Physics.Raycast(Muzzle.position, transform.forward, out RaycastHit hitInfo, gunData.maxDistance))
+               Gunshot.Play(); 
+                if (Physics.Raycast(Muzzle.position, Muzzle.transform.forward, out  hit, gunData.maxDistance))
                 {
-                    Debug.Log("hiy0");
-                    Gunshot.Play();
+                    Enemy enemy = hit.transform.GetComponent<Enemy>();
+                    if (enemy != null)
+                    {
+                        enemy.TakeDamage(gunData.damage);
+                    }
+                    
                 }
                 gunData.currentAmmo--;
                 timeSinceLastShot = 0;

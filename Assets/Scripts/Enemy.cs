@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour
     public float xMax;
     public float zMax;
 
+    public float health = 100f;
+    public int ekills;
+
     private float xPosition;
     private float yPosition;
     private float zPosition;
@@ -44,5 +47,20 @@ public class Enemy : MonoBehaviour
         yPosition = transform.position.y;
         zPosition = Random.Range(zMin, zMax);
         enemy.SetDestination(new Vector3(xPosition, yPosition, zPosition));
+    }
+
+    public void TakeDamage(float amount)
+    {
+        health -= amount;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
+        ekills += 1;
     }
 }
