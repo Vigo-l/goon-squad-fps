@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Glock
   m_EditorClassIdentifier: 
   name: pistol
-  damage: 33
+  damage: 50
   maxDistance: 200
   currentAmmo: 15
   magSize: 15
   fireRate: 200
-  reloadTime: 1.5
+  reloadTime: 2.001
   reloading: 0

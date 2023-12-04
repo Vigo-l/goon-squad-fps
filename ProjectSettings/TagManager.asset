@@ -7,6 +7,7 @@ TagManager:
   - NPC
   - WeaponHolder
   - telegoon
+  - Button
   layers:
   - Default
   - TransparentFX

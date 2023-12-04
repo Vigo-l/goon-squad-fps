@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,21 +9,25 @@ public class Enemy : MonoBehaviour
     public NavMeshAgent enemy;
 
     public float squareOfMovement = 50f;
-    
+
     public float xMin;
     public float zMin;
     public float xMax;
     public float zMax;
 
+    public GameObject door;
+
+    public int damage = 10;
+
     public float health = 100f;
-    public int ekills;
+    public Gun gun;
 
     private float xPosition;
     private float yPosition;
     private float zPosition;
 
     public float closeEnough = 3f;
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -30,12 +35,15 @@ public class Enemy : MonoBehaviour
         xMin = zMin = -squareOfMovement;
         xMax = zMax = squareOfMovement;
         newLocation();
+
     }
+
+
 
     // Update is called once per frame
     void Update()
     {
-        if(Vector3.Distance(transform.position, new Vector3(xPosition, yPosition, zPosition)) <= closeEnough)
+        if (Vector3.Distance(transform.position, new Vector3(xPosition, yPosition, zPosition)) <= closeEnough)
         {
             newLocation();
         }
@@ -60,7 +68,19 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        gun.enemyCount++;
         Destroy(gameObject);
-        ekills += 1;
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerMovement player = collision.gameObject.GetComponent<PlayerMovement>();
+
+            if (player != null)
+            {
+                player.TakeDamage(damage);
+            }
+        }
     }
 }

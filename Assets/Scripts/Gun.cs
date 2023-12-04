@@ -1,22 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.ProBuilder.Shapes;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class Gun : MonoBehaviour
 {
     public GunData gunData;
-    public Transform Muzzle;
+    public Transform cam;
+    public Dooranimation Dooranimation;
     public AudioSource Gunshot;
-
+    public AudioSource Emptyammo;
+    public int enemyCount = 0;
+    public int requiredEnemyCount = 5;
+    public GameObject door;
+    public Image emptygun;
     Animator weaponAnimator;
+    string currentScene;
 
     float timeSinceLastShot;
     public void Start()
     {
+        door.SetActive(false);
         PlayerShoot.shootInput += Shoot;
         PlayerShoot.reloadInput += StartReload;
         weaponAnimator = GameObject.FindGameObjectWithTag("WeaponHolder").GetComponent<Animator>();
+        string currentScene = SceneManager.GetActiveScene().name;
+
+
+
     }
     public void StartReload()
     {
@@ -47,12 +63,15 @@ public class Gun : MonoBehaviour
         RaycastHit hit;
         if (gunData.currentAmmo > 0)
         {
+
+
             if (CanShoot())
             {
-               Gunshot.Play(); 
-                if (Physics.Raycast(Muzzle.position, Muzzle.transform.forward, out  hit, gunData.maxDistance))
+               Gunshot.Play();
+                if (Physics.Raycast(cam.position, cam.transform.forward, out  hit, gunData.maxDistance))
                 {
                     Enemy enemy = hit.transform.GetComponent<Enemy>();
+                    Debug.Log(hit.transform.name);
                     if (enemy != null)
                     {
                         enemy.TakeDamage(gunData.damage);
@@ -67,12 +86,24 @@ public class Gun : MonoBehaviour
     }
 
   
-    private void Update()
+    public void Update()
     {
         timeSinceLastShot += Time.deltaTime;
+        if (enemyCount >= requiredEnemyCount)
+        {
+            door.SetActive(true);
+            Dooranimation.doorvisible = true;
+        }
+        if (currentScene == "level2")
+        {
+            requiredEnemyCount = 6;
+        }
+        if (currentScene == "Level desert(2)")
+        {
+            requiredEnemyCount = 20;
+        }
     }
-
-    private void OnGunShot()
+    public void OnGunShot()
     {
 
     }

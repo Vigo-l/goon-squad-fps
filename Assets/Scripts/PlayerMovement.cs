@@ -12,6 +12,9 @@ public class PlayerMovement : MonoBehaviour
 
     public float groundDrag;
 
+    public int maxHealth = 100;
+    public int currentHealth;
+
     [Header("Jumping")]
     public float jumpForce;
     public float jumpCooldown;
@@ -63,7 +66,10 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
+        currentHealth = maxHealth;
+
         readyToJump = true;
+
 
         startYScale = transform.localScale.y;
     }
@@ -195,6 +201,14 @@ public class PlayerMovement : MonoBehaviour
         exitingSlope = false;
     }
 
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
     private bool OnSlope()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
@@ -209,5 +223,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+    }
+    public void Die()
+    {
+        Debug.Log("died");
     }
 }

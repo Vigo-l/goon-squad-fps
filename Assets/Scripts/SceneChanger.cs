@@ -5,13 +5,28 @@ using UnityEngine.SceneManagement;
 
 public class buttonScript : MonoBehaviour
 {
+    public Camera Player;
+    public string sceneName;
 
-    private void OnMouseUpAsButton()
+    private void Update()
     {
-        home();
+        if (Input.GetMouseButton(0))
+        {
+            RaycastHit hit;
+            Ray ray = Player.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider != null && hit.collider.CompareTag("Button"))
+                {
+                    loadingScene(sceneName);
+                }
+            }
+        }
     }
-    public void home()
+
+    public void loadingScene(string sceneName)
     {
-        SceneManager.LoadScene("Home");
+        Debug.Log(sceneName);
+        SceneManager.LoadScene(sceneName);
     }
 }
