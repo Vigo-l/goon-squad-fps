@@ -7,7 +7,6 @@ public class Dooranimation : MonoBehaviour
 {
     public Animator opendooranimator;
     public bool doorvisible;
-    public Levelcompletechecker levelcompletechecker;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +20,6 @@ public class Dooranimation : MonoBehaviour
         if (doorvisible == true)
         {
             opendooranimator.SetBool("Startdoor", true);
-            levelcompletechecker.level1 = true;
         }
     }
 }

@@ -11,8 +11,53 @@ public class GunData : ScriptableObject
     public float maxDistance;
 
     public int currentAmmo;
-    public int magSize = 15;
+    public int magSize;
     public float fireRate;
     public float reloadTime;
-    public bool reloading = false;
+    public bool reloading;
+
+    private void OnEnable()
+    {
+        InitializeDefaults();
+    }
+
+    private void InitializeDefaults()
+    {
+        reloading = false;
+        currentAmmo = 15;
+    }
+
+    // Method to perform null checks and initialize defaults if necessary
+    public void PerformNullChecks()
+    {
+        if (name == null)
+        {
+            Debug.LogWarning("GunData name is null. Setting to default.");
+            name = "Gun";
+        }
+
+        if (reloading && currentAmmo < 0)
+        {
+            Debug.LogWarning("GunData has invalid currentAmmo value. Resetting to default.");
+            currentAmmo = 15;
+        }
+
+        if (magSize <= 0)
+        {
+            Debug.LogWarning("GunData has invalid magSize value. Resetting to default.");
+            magSize = 15;
+        }
+
+        if (fireRate <= 0)
+        {
+            Debug.LogWarning("GunData has invalid fireRate value. Resetting to default.");
+            fireRate = 1.0f;
+        }
+
+        if (reloadTime <= 0)
+        {
+            Debug.LogWarning("GunData has invalid reloadTime value. Resetting to default.");
+            reloadTime = 1.0f;
+        }
+    }
 }

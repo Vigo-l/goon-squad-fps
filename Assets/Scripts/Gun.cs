@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
 using UnityEngine.SceneManagement;
@@ -14,6 +13,10 @@ public class Gun : MonoBehaviour
     public Transform cam;
     public Dooranimation Dooranimation;
     public AudioSource Gunshot;
+    public Transform bulletSpawnPoint;
+    public GameObject bulletPrefab;
+    public float bulletSpeed = 10f;
+    public float maxBulletDistance = 50f;
     public AudioSource Emptyammo;
     public int enemyCount = 0;
     public int requiredEnemyCount = 5;
@@ -23,60 +26,65 @@ public class Gun : MonoBehaviour
     string currentScene;
 
     float timeSinceLastShot;
+
     public void Start()
     {
         door.SetActive(false);
         PlayerShoot.shootInput += Shoot;
         PlayerShoot.reloadInput += StartReload;
-        weaponAnimator = GameObject.FindGameObjectWithTag("WeaponHolder").GetComponent<Animator>();
-        string currentScene = SceneManager.GetActiveScene().name;
+        weaponAnimator = GameObject.FindGameObjectWithTag("WeaponHolder")?.GetComponent<Animator>();
+        currentScene = SceneManager.GetActiveScene().name;
+        GameObject gunObject = GameObject.Find("Gun");
 
-
-
+        if (gunObject == null)
+        {
+            Debug.LogError("Gun object not found!");
+        }
     }
+
     public void StartReload()
     {
-        if (!gunData.reloading)
+        if (gunData != null && !gunData.reloading)
         {
             StartCoroutine(Reload());
         }
     }
 
+
     private IEnumerator Reload()
     {
-        gunData.reloading = true;
-        weaponAnimator.SetBool("reloading", true);
+        if (gunData != null)
+        {
+            gunData.reloading = true;
+            weaponAnimator?.SetBool("reloading", true);
 
-        yield return new WaitForSeconds(gunData.reloadTime);
+            yield return new WaitForSeconds(gunData.reloadTime);
 
-        gunData.currentAmmo = gunData.magSize;
+            gunData.currentAmmo = gunData.magSize;
 
-        gunData.reloading = false;
-        weaponAnimator.SetBool("reloading", false);
-
-
+            gunData.reloading = false;
+            weaponAnimator?.SetBool("reloading", false);
+        }
     }
 
-    private bool CanShoot() => !gunData.reloading && timeSinceLastShot > 1f / (gunData.fireRate / 60f);
+    private bool CanShoot() => gunData != null && !gunData.reloading && timeSinceLastShot > 1f / (gunData.fireRate / 60f);
+
     public void Shoot()
     {
         RaycastHit hit;
-        if (gunData.currentAmmo > 0)
+        if (gunData != null && gunData.currentAmmo > 0)
         {
-
-
             if (CanShoot())
             {
-               Gunshot.Play();
-                if (Physics.Raycast(cam.position, cam.transform.forward, out  hit, gunData.maxDistance))
+                Gunshot?.Play();
+                if (Physics.Raycast(cam?.position ?? Vector3.zero, cam?.transform?.forward ?? Vector3.forward, out hit, gunData.maxDistance))
                 {
-                    Enemy enemy = hit.transform.GetComponent<Enemy>();
-                    Debug.Log(hit.transform.name);
+                    Enemy enemy = hit.transform?.GetComponent<Enemy>();
+                    Debug.Log(hit.transform?.name);
                     if (enemy != null)
                     {
                         enemy.TakeDamage(gunData.damage);
                     }
-                    
                 }
                 gunData.currentAmmo--;
                 timeSinceLastShot = 0;
@@ -85,26 +93,51 @@ public class Gun : MonoBehaviour
         }
     }
 
-  
     public void Update()
     {
         timeSinceLastShot += Time.deltaTime;
-        if (enemyCount >= requiredEnemyCount)
+        if (enemyCount >= requiredEnemyCount && door != null && Dooranimation != null)
         {
             door.SetActive(true);
             Dooranimation.doorvisible = true;
         }
-        if (currentScene == "level2")
-        {
-            requiredEnemyCount = 6;
-        }
-        if (currentScene == "Level desert(2)")
-        {
-            requiredEnemyCount = 20;
-        }
     }
-    public void OnGunShot()
-    {
 
+    void OnGunShot()
+    {
+        if (bulletSpawnPoint != null && bulletPrefab != null)
+        {
+            // Instantiate a new bullet
+            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+
+            // Set the bullet's initial velocity
+            Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+            if (bulletRb != null)
+            {
+                bulletRb.velocity = bulletSpawnPoint.forward * bulletSpeed;
+            }
+
+            // Destroy the bullet if it's too far away
+            DestroyIfTooFar(bullet);
+        }
+
+        void DestroyIfTooFar(GameObject bullet)
+        {
+            if (bullet != null)
+            {
+                float distance = Vector3.Distance(bullet.transform.position, transform.position);
+                if (distance > maxBulletDistance)
+                {
+                    // Make sure to check if the bullet and its components are null before destroying
+                    if (bullet.GetComponent<Rigidbody>() != null)
+                    {
+                        Destroy(bullet.GetComponent<Rigidbody>());
+                    }
+
+                    // Check if the bullet object is null before destroying
+                    Destroy(bullet);
+                }
+            }
+        }
     }
 }

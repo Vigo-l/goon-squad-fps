@@ -8,6 +8,9 @@ TagManager:
   - WeaponHolder
   - telegoon
   - Button
+  - Button2
+  - Button3
+  - Piano
   layers:
   - Default
   - TransparentFX

@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     public NavMeshAgent enemy;
+    public GameObject player;
 
     public float squareOfMovement = 50f;
 
@@ -32,20 +33,27 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        xMin = zMin = -squareOfMovement;
-        xMax = zMax = squareOfMovement;
-        newLocation();
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
 
+        if (player == null)
+        {
+            Debug.LogError("Player not found!");
+        }
     }
 
-
-
-    // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, new Vector3(xPosition, yPosition, zPosition)) <= closeEnough)
+        if (player != null)
         {
-            newLocation();
+            // Check if the enemy is close enough to the player
+            if (Vector3.Distance(transform.position, player.transform.position) > closeEnough)
+            {
+                // Update the destination to the player's position
+                enemy.SetDestination(player.transform.position);
+            }
         }
     }
 
@@ -83,4 +91,5 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+
 }

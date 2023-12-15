@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Call : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class Call : MonoBehaviour
         // Wait for 11 seconds and then call a method
         Invoke("YourMethod", 11f);
     }
+
+    private void Update()
+    {
+    }
+
 
     void YourMethod()
     {

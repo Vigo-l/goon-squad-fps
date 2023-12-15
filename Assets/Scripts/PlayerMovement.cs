@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -20,6 +23,10 @@ public class PlayerMovement : MonoBehaviour
     public float jumpCooldown;
     public float airMultiplier;
     bool readyToJump;
+
+    [Header("game over")]
+
+    public GameOverScreen gameover;
 
     [Header("Crouching")]
     public float crouchSpeed;
@@ -65,6 +72,8 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
+
 
         currentHealth = maxHealth;
 
@@ -226,6 +235,8 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Die()
     {
-        Debug.Log("died");
+        SceneManager.LoadScene("Menu");
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 }

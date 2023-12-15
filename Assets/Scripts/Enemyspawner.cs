@@ -1,20 +1,32 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-public class Enemyspawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab;
-    public int enemyCount;
+    public GameObject enemyPrefab;  // The enemy prefab to spawn
+    public int numberOfEnemies = 10; // Number of enemies to spawn
+    public float spawnDistance = 5f; // Distance between each enemy
+    public float spawnDelay = 1f;    // Delay between spawns
+
     void Start()
     {
-       for (int i  = 0 ; i < enemyCount; i++)
-        {
-            GameObject enemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
-        }
-
+        StartCoroutine(SpawnEnemies());
     }
 
-    // Update is called once per frame
+    IEnumerator SpawnEnemies()
+    {
+        for (int i = 0; i < numberOfEnemies; i++)
+        {
+            SpawnEnemy();
+            yield return new WaitForSeconds(spawnDelay);
+        }
+    }
+
+    void SpawnEnemy()
+    {
+        Vector3 spawnPosition = transform.position + Random.onUnitSphere * spawnDistance;
+        spawnPosition.y = 0f; // Ensure enemies spawn at the same height (adjust as needed)
+
+        Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+    }
 }
