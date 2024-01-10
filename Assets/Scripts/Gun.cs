@@ -20,6 +20,8 @@ public class Gun : MonoBehaviour
     public AudioSource Emptyammo;
     public int enemyCount = 0;
     public int requiredEnemyCount = 5;
+    public int orbCount = 0;
+    public int requiredOrbCount = 5;
     public GameObject door;
     public Image emptygun;
     Animator weaponAnimator;
@@ -34,19 +36,13 @@ public class Gun : MonoBehaviour
         PlayerShoot.reloadInput += StartReload;
         weaponAnimator = GameObject.FindGameObjectWithTag("WeaponHolder")?.GetComponent<Animator>();
         currentScene = SceneManager.GetActiveScene().name;
-        GameObject gunObject = GameObject.Find("Gun");
-
-        if (gunObject == null)
-        {
-            Debug.LogError("Gun object not found!");
-        }
     }
 
     public void StartReload()
     {
-        if (gunData != null && !gunData.reloading)
+        if (!gunData.reloading)
         {
-            StartCoroutine(Reload());
+            StartCoroutine(Reload()); 
         }
     }
 
@@ -97,6 +93,11 @@ public class Gun : MonoBehaviour
     {
         timeSinceLastShot += Time.deltaTime;
         if (enemyCount >= requiredEnemyCount && door != null && Dooranimation != null)
+        {
+            door.SetActive(true);
+            Dooranimation.doorvisible = true;
+        }
+        if (orbCount >= requiredOrbCount && door != null && Dooranimation != null)
         {
             door.SetActive(true);
             Dooranimation.doorvisible = true;

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf385c5bfc879bb439fb1feda2549d9d, type: 3}
   m_Name: Tec9
   m_EditorClassIdentifier: 
-  name: Tec9
+  name: Goon9
   damage: 10
   maxDistance: 50
-  currentAmmo: 3
+  currentAmmo: 25
   magSize: 25
   fireRate: 2000
   reloadTime: 1

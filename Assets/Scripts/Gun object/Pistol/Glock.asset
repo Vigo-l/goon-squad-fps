@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf385c5bfc879bb439fb1feda2549d9d, type: 3}
   m_Name: Glock
   m_EditorClassIdentifier: 
-  name: pistol
+  name: Goon19
   damage: 50
   maxDistance: 200
-  currentAmmo: 9
+  currentAmmo: 15
   magSize: 15
   fireRate: 200
   reloadTime: 2.001

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf385c5bfc879bb439fb1feda2549d9d, type: 3}
-  m_Name: Assault rifle
+  m_Name: Blunderbuss
   m_EditorClassIdentifier: 
-  name: Edgep7
-  damage: 15
-  maxDistance: 50
-  currentAmmo: 15
-  magSize: 30
-  fireRate: 600
+  name: Blunderbuss
+  damage: 150
+  maxDistance: 25
+  currentAmmo: 1
+  magSize: 1
+  fireRate: 10
   reloadTime: 3
-  reloading: 0
+  reloading: 1

@@ -9,6 +9,7 @@ public class AmmoDisplay : MonoBehaviour
 {
     public GunData gundata;
     public TextMeshProUGUI ammoDisplay;
+    public TextMeshProUGUI weaponname;
     public string slash = "/";
     public string reloading = "reloading..";
     // Start is called before the first frame update
@@ -19,7 +20,9 @@ public class AmmoDisplay : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+
     {
+        weaponname.text = gundata.name;
         ammoDisplay.text = gundata.currentAmmo.ToString() + slash + gundata.magSize;
         if (gundata.reloading == true)
         {
