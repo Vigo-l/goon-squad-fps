@@ -24,7 +24,7 @@ public class GunData : ScriptableObject
     private void InitializeDefaults()
     {
         reloading = false;
-        currentAmmo = 15;
+        currentAmmo = magSize;
     }
 
     // Method to perform null checks and initialize defaults if necessary

@@ -15,8 +15,8 @@ MonoBehaviour:
   name: Blunderbuss
   damage: 150
   maxDistance: 25
-  currentAmmo: 1
+  currentAmmo: 0
   magSize: 1
-  fireRate: 10
+  fireRate: 2000
   reloadTime: 3
   reloading: 1
