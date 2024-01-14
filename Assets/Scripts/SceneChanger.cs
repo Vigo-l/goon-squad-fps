@@ -11,6 +11,7 @@ public class buttonScript : MonoBehaviour
     public string sceneName;
     public string sceneName2;
     public string sceneName3;
+    public string sceneName4;
 
     public AudioSource piano;
     public AudioSource sound;
@@ -40,6 +41,10 @@ public class buttonScript : MonoBehaviour
                 if (hit.collider != null && hit.collider.CompareTag("Button3"))
                 {
                     loadingScene(sceneName3);
+                }
+                if (hit.collider != null && hit.collider.CompareTag("Button4"))
+                {
+                    loadingScene(sceneName4);
                 }
                 if (hit.collider != null && hit.collider.CompareTag("Piano"))
                 {

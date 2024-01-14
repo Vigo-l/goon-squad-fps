@@ -11,6 +11,7 @@ TagManager:
   - Button2
   - Button3
   - Piano
+  - Button4
   layers:
   - Default
   - TransparentFX

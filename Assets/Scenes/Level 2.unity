@@ -3908,7 +3908,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -305, y: 202}
+  m_AnchoredPosition: {x: -476.1, y: 202}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &956745723
@@ -3931,7 +3931,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: A door has spawned
+  m_text: A door has spawned at the path
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3994,7 +3994,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -148.13315, w: 0}
+  m_margin: {x: 0, y: 0, z: -336.55084, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5987,7 +5987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c207c34c69e42d44c9ad38b3f497d831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activationDistance: 15
+  activationDistance: 25
   button: {fileID: 1179687799}
 --- !u!1 &1252129478
 GameObject:
@@ -14028,6 +14028,8 @@ MonoBehaviour:
   Emptyammo: {fileID: 1851974293}
   enemyCount: 0
   requiredEnemyCount: 6
+  orbCount: 0
+  requiredOrbCount: 5
   door: {fileID: 1188404769}
 --- !u!95 &8939503067314101498
 Animator:

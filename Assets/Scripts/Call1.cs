@@ -16,7 +16,7 @@ public class Call1 : MonoBehaviour
         callanimator = GameObject.FindGameObjectWithTag("telegoon").GetComponent<Animator>();
 
         // Wait for 11 seconds and then call a method
-        Invoke("YourMethod", 11f);
+        Invoke("YourMethod", 30f);
     }
 
     void YourMethod()
