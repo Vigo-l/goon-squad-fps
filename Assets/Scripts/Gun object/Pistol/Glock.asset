@@ -15,8 +15,10 @@ MonoBehaviour:
   name: Goon19
   damage: 50
   maxDistance: 200
-  currentAmmo: 15
+  currentAmmo: 0
   magSize: 15
   fireRate: 200
   reloadTime: 2.001
-  reloading: 0
+  inspectTime: 2
+  reloading: 1
+  inspecting: 0

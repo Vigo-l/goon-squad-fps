@@ -21,4 +21,8 @@ public class Scenemanager : MonoBehaviour
     {
         SceneManager.LoadScene("Home");
     }
+    public void Level4()
+    {
+        SceneManager.LoadScene("Labyrinth");
+    }
 }

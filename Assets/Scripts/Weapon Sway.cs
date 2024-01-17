@@ -1,26 +1,44 @@
-using System;
 using UnityEngine;
 
-public class WeaponSway : MonoBehaviour
+
+
+public class WeaponRotationDrag : MonoBehaviour
 {
+    public float drag = 2.5f;
+    public float dragThreshold = -5f;
+    public float smooth = 5;
 
-    [Header("Sway Settings")]
-    [SerializeField] private float smooth;
-    [SerializeField] private float multiplier;
+    private Quaternion localRotation;
 
-    private void Update()
+    void Start()
     {
-        // get mouse input
-        float mouseX = Input.GetAxisRaw("Mouse X") * multiplier;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * multiplier;
+        localRotation = transform.localRotation;
+    }
 
-        // calculate target rotation
-        Quaternion rotationX = Quaternion.AngleAxis(-mouseY, Vector3.right);
-        Quaternion rotationY = Quaternion.AngleAxis(mouseX, Vector3.up);
+    void Update()
+    {
+        float z = (Input.GetAxis("Mouse Y")) * drag;
+        float y = -(Input.GetAxis("Mouse X")) * drag;
 
-        Quaternion targetRotation = rotationX * rotationY;
+        if (drag >= 0) //weapon lags behind camera
+        {
+            y = (y > dragThreshold) ? dragThreshold : y;
+            y = (y < -dragThreshold) ? -dragThreshold : y;
 
-        // rotate 
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, smooth * Time.deltaTime);
+            z = (z > dragThreshold) ? dragThreshold : z;
+            z = (z < -dragThreshold) ? -dragThreshold : z;
+        }
+        else //camera lags behind weapon
+        {
+            y = (y < dragThreshold) ? dragThreshold : y;
+            y = (y > -dragThreshold) ? -dragThreshold : y;
+
+            z = (z < dragThreshold) ? dragThreshold : z;
+            z = (z > -dragThreshold) ? -dragThreshold : z;
+        }
+
+        //weapon default rotation transform has to be (0, 0, 0)
+        Quaternion newRotation = Quaternion.Euler(localRotation.x, localRotation.y + y, localRotation.z + z);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, newRotation, (Time.deltaTime * smooth));
     }
 }

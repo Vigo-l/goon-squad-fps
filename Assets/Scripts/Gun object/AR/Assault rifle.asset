@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Assault rifle
   m_EditorClassIdentifier: 
   name: Edgep7
-  damage: 15
+  damage: 25
   maxDistance: 50
-  currentAmmo: 15
+  currentAmmo: 0
   magSize: 30
   fireRate: 600
   reloadTime: 3
-  reloading: 0
+  reloading: 1

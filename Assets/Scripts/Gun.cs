@@ -34,6 +34,7 @@ public class Gun : MonoBehaviour
         door.SetActive(false);
         PlayerShoot.shootInput += Shoot;
         PlayerShoot.reloadInput += StartReload;
+        PlayerShoot.inspectInput += StartInspect;
         weaponAnimator = GameObject.FindGameObjectWithTag("WeaponHolder")?.GetComponent<Animator>();
         currentScene = SceneManager.GetActiveScene().name;
     }
@@ -43,6 +44,13 @@ public class Gun : MonoBehaviour
         if (!gunData.reloading)
         {
             StartCoroutine(Reload()); 
+        }
+    }
+    public void StartInspect()
+    {
+        if (!gunData.inspecting)
+        {
+            StartCoroutine(Inspect());
         }
     }
 
@@ -62,8 +70,21 @@ public class Gun : MonoBehaviour
             weaponAnimator?.SetBool("reloading", false);
         }
     }
+    private IEnumerator Inspect()
+    {
+        if (gunData != null)
+        {
+            gunData.inspecting = true;
+            weaponAnimator?.SetBool("inspecting", true);
 
-    private bool CanShoot() => gunData != null && !gunData.reloading && timeSinceLastShot > 1f / (gunData.fireRate / 60f);
+            yield return new WaitForSeconds(gunData.inspectTime);
+
+            gunData.inspecting = false;
+            weaponAnimator?.SetBool("inspecting", false);
+        }
+    }
+
+    private bool CanShoot() => gunData != null && !gunData.reloading && !gunData.inspecting && timeSinceLastShot > 1f / (gunData.fireRate / 60f);
 
     public void Shoot()
     {

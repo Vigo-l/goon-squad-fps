@@ -8,8 +8,10 @@ public class PlayerShoot : MonoBehaviour
     public static Action shootInput;
 
     public static Action reloadInput;
+    public static Action inspectInput;
 
     public KeyCode reloadkey;
+    public KeyCode inspectkey;
 
 
     private void Update()
@@ -22,6 +24,10 @@ public class PlayerShoot : MonoBehaviour
         if (Input.GetKeyDown(reloadkey))
         {
             reloadInput?.Invoke();
+        }
+        if (Input.GetKeyDown(inspectkey))
+        {
+            inspectInput?.Invoke();
         }
 
     }

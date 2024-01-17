@@ -1,33 +1,35 @@
 using System.Collections;
-using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Call : MonoBehaviour
 {
     public AudioClip audioClip;
-    Animator callanimator;
+    Animator callAnimator;
+
     void Start()
     {
-        // Play the audio clip
+
         AudioSource audioSource = GetComponent<AudioSource>();
         audioSource.clip = audioClip;
         audioSource.Play();
-        callanimator = GameObject.FindGameObjectWithTag("telegoon").GetComponent<Animator>();
+        callAnimator = GameObject.FindGameObjectWithTag("telegoon").GetComponent<Animator>();
 
-        // Wait for 11 seconds and then call a method
-        Invoke("YourMethod", 11f);
+
+        Invoke("Done", 6f);
     }
 
     private void Update()
     {
     }
 
-
-    void YourMethod()
+    void Done()
     {
-        callanimator.SetBool("donecall", true);
-        Destroy(gameObject);
-    }
 
+        callAnimator.SetBool("donecall", true);
+        Destroy(gameObject);
+
+    }
 }
+

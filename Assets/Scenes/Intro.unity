@@ -1271,6 +1271,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1082228800}
   sceneName: Home
+  sceneName2: 
+  sceneName3: 
+  sceneName4: 
+  piano: {fileID: 0}
+  sound: {fileID: 0}
 --- !u!4 &1461461763
 Transform:
   m_ObjectHideFlags: 0
@@ -1580,12 +1585,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38563ab5a38d7244aa14fb04849cbde6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 2
-  sprintSpeed: 5
+  walkSpeed: 6
+  sprintSpeed: 6
   groundDrag: 3
+  maxHealth: 100
+  currentHealth: 0
   jumpForce: 0
   jumpCooldown: -0.41
   airMultiplier: 0.4
+  gameover: {fileID: 0}
   crouchSpeed: 3.5
   crouchYScale: 0.5
   jumpKey: 32

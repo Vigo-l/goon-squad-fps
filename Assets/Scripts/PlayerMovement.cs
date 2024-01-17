@@ -89,17 +89,13 @@ public class PlayerMovement : MonoBehaviour
 
         MyInput();
         SpeedControl();
+        MovePlayer();
         StateHandler();
 
         if (grounded)
             rb.drag = groundDrag;
         else
             rb.drag = 0;
-    }
-
-    private void FixedUpdate()
-    {
-        MovePlayer();
     }
 
     private void MyInput()

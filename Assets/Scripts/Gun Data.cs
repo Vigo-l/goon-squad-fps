@@ -14,7 +14,9 @@ public class GunData : ScriptableObject
     public int magSize;
     public float fireRate;
     public float reloadTime;
+    public float inspectTime;
     public bool reloading;
+    public bool inspecting;
 
     private void OnEnable()
     {
@@ -24,6 +26,7 @@ public class GunData : ScriptableObject
     private void InitializeDefaults()
     {
         reloading = false;
+        inspecting = false;
         currentAmmo = magSize;
     }
 
@@ -58,6 +61,12 @@ public class GunData : ScriptableObject
         {
             Debug.LogWarning("GunData has invalid reloadTime value. Resetting to default.");
             reloadTime = 1.0f;
+        }
+       
+        if (inspectTime <= 0)
+        {
+            Debug.LogWarning("GunData has invalid reloadTime value. Resetting to default.");
+            inspectTime = 1.0f;
         }
     }
 }
