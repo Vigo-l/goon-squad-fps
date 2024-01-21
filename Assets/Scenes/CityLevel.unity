@@ -11623,8 +11623,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1076433037}
   bulletSpeed: 50
   maxBulletDistance: 200
-  Emptyammo: {fileID: 0}
   enemyCount: 0
+  reloadkey: 114
+  inspectkey: 105
   requiredEnemyCount: 5
   orbCount: 0
   requiredOrbCount: 5

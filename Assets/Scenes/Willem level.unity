@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.22468325, g: 0.14971697, b: 0.101509176, a: 1}
+  m_IndirectSpecularColor: {r: 0.22457132, g: 0.14971456, b: 0.1016643, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -29319,8 +29319,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1944464399}
   bulletSpeed: 100
   maxBulletDistance: 50
-  Emptyammo: {fileID: 0}
   enemyCount: 0
+  reloadkey: 114
+  inspectkey: 105
   requiredEnemyCount: 21
   orbCount: 0
   requiredOrbCount: 5

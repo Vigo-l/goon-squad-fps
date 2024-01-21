@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,15 +10,25 @@ using UnityEngine.UIElements;
 
 public class Gun : MonoBehaviour
 {
+    [Header ("Objects")]
     public GunData gunData;
     public Transform cam;
-    public Dooranimation Dooranimation;
+
+    [Header("Audio")]
     public AudioSource Gunshot;
-    public Transform bulletSpawnPoint;
-    public GameObject bulletPrefab;
+
+    public Dooranimation Dooranimation;
+
     public float bulletSpeed = 10f;
     public float maxBulletDistance = 50f;
     public int enemyCount = 0;
+    public static Action shootInput;
+
+    public static Action reloadInput;
+    public static Action inspectInput;
+
+    public KeyCode reloadkey;
+    public KeyCode inspectkey;
     public int requiredEnemyCount = 5;
     public int orbCount = 0;
     public int requiredOrbCount = 5;
@@ -32,42 +43,23 @@ public class Gun : MonoBehaviour
     public void Awake()
     {
         door.SetActive(false);
-        PlayerShoot.shootInput += Shoot;
-        PlayerShoot.reloadInput += StartReload;
-        PlayerShoot.inspectInput += StartInspect;
         weaponAnimator = GameObject.FindGameObjectWithTag("WeaponHolder")?.GetComponent<Animator>();
         currentScene = SceneManager.GetActiveScene().name;
     }
 
     public void StartReload()
     {
-        if (!gunData.reloading)
-        {
-            StopCoroutine("Reload");
             StartCoroutine(Reload());
-        }
     }
     public void StartInspect()
     {
-        if (!gunData.inspecting)
-        {
+
             StartCoroutine(Inspect());
-        }
-    }
 
-    private void OnDestroy()
-    {
-        if (IsInvoking("Reload"))
-        {
-            StopCoroutine("Reload");
-        }
     }
-
 
     private IEnumerator Reload()
     {
-        if (gunData != null)
-        {
             gunData.reloading = true;
             weaponAnimator?.SetBool("reloading", true);
 
@@ -77,7 +69,6 @@ public class Gun : MonoBehaviour
 
             gunData.reloading = false;
             weaponAnimator?.SetBool("reloading", false);
-        }
     }
     private IEnumerator Inspect()
     {
@@ -113,7 +104,6 @@ public class Gun : MonoBehaviour
                 }
                 gunData.currentAmmo--;
                 timeSinceLastShot = 0;
-                OnGunShot();
             }
         }
     }
@@ -132,43 +122,18 @@ public class Gun : MonoBehaviour
             door.SetActive(true);
             Dooranimation.doorvisible = true;
         }
-    }
-
-    void OnGunShot()
-    {
-        if (bulletSpawnPoint != null && bulletPrefab != null)
+        if (Input.GetMouseButton(0))
         {
-            // Instantiate a new bullet
-            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-
-            // Set the bullet's initial velocity
-            Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-            if (bulletRb != null)
-            {
-                bulletRb.velocity = bulletSpawnPoint.forward * bulletSpeed;
-            }
-
-            // Destroy the bullet if it's too far away
-            DestroyIfTooFar(bullet);
+            Shoot();
         }
 
-        void DestroyIfTooFar(GameObject bullet)
+        if (Input.GetKeyDown(reloadkey))
         {
-            if (bullet != null)
-            {
-                float distance = Vector3.Distance(bullet.transform.position, transform.position);
-                if (distance > maxBulletDistance)
-                {
-                    // Make sure to check if the bullet and its components are null before destroying
-                    if (bullet.GetComponent<Rigidbody>() != null)
-                    {
-                        Destroy(bullet.GetComponent<Rigidbody>());
-                    }
-
-                    // Check if the bullet object is null before destroying
-                    Destroy(bullet);
-                }
-            }
+            StartReload();
+        }
+        if (Input.GetKeyDown(inspectkey))
+        {
+            StartInspect();
         }
     }
-}
+    }

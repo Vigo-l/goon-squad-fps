@@ -13602,7 +13602,6 @@ GameObject:
   - component: {fileID: 2006366288}
   - component: {fileID: 2006366291}
   - component: {fileID: 2006366290}
-  - component: {fileID: 2006366292}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -13689,20 +13688,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2006366292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2006366287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9789ac2baf67c6845a03dcc21d95798d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reloadkey: 114
-  inspectkey: 105
 --- !u!1 &2028835757 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c11fd578579281b4ea26cfe07811d38e, type: 3}
@@ -15944,6 +15929,8 @@ MonoBehaviour:
   bulletSpeed: 100
   maxBulletDistance: 50
   enemyCount: 0
+  reloadkey: 114
+  inspectkey: 105
   requiredEnemyCount: 21
   orbCount: 0
   requiredOrbCount: 5
