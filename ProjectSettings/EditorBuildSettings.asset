@@ -5,28 +5,28 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Intro.unity
     guid: 97d911e2307ebab43aad3146e4caf6b9
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Home.unity
     guid: 019790abfae4d63458beb01e48e5c0b6
   - enabled: 1
     path: Assets/Scenes/Level 2.unity
     guid: 446d838eab87d2c41b3f3e94f6190f06
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Level desert(2).unity
     guid: 5c6e737d329bba54eae5223405d60bd4
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: 9cbf5d1dcb76ac04bb648d681d632af4
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/CityLevel.unity
     guid: 337e962c751026c49ae7fadc1619d018
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Labyrinth.unity
     guid: 08fff1341c0505847bfec5d070203d4e
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Willem level.unity
     guid: 846fbb2891dcb4a4183b714410a8a258
   m_configObjects: {}

@@ -10,8 +10,8 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     private float moveSpeed;
-    public float walkSpeed;
-    public float sprintSpeed;
+    public float walkSpeed = 5;
+    public float sprintSpeed = 10;
 
     public float groundDrag;
 

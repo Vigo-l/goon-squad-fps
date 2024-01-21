@@ -17,19 +17,19 @@ public class Gun : MonoBehaviour
     public GameObject bulletPrefab;
     public float bulletSpeed = 10f;
     public float maxBulletDistance = 50f;
-    public AudioSource Emptyammo;
     public int enemyCount = 0;
     public int requiredEnemyCount = 5;
     public int orbCount = 0;
     public int requiredOrbCount = 5;
     public GameObject door;
+    private Ray ray;
     public Image emptygun;
     Animator weaponAnimator;
     string currentScene;
 
     float timeSinceLastShot;
 
-    public void Start()
+    public void Awake()
     {
         door.SetActive(false);
         PlayerShoot.shootInput += Shoot;
@@ -43,7 +43,8 @@ public class Gun : MonoBehaviour
     {
         if (!gunData.reloading)
         {
-            StartCoroutine(Reload()); 
+            StopCoroutine("Reload");
+            StartCoroutine(Reload());
         }
     }
     public void StartInspect()
@@ -51,6 +52,14 @@ public class Gun : MonoBehaviour
         if (!gunData.inspecting)
         {
             StartCoroutine(Inspect());
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (IsInvoking("Reload"))
+        {
+            StopCoroutine("Reload");
         }
     }
 
@@ -89,15 +98,14 @@ public class Gun : MonoBehaviour
     public void Shoot()
     {
         RaycastHit hit;
-        if (gunData != null && gunData.currentAmmo > 0)
+        if (cam != null && gunData != null && gunData.currentAmmo > 0)
         {
             if (CanShoot())
             {
-                Gunshot?.Play();
-                if (Physics.Raycast(cam?.position ?? Vector3.zero, cam?.transform?.forward ?? Vector3.forward, out hit, gunData.maxDistance))
+                if (Physics.Raycast(cam.position, cam.transform.forward, out hit, gunData.maxDistance))
                 {
-                    Enemy enemy = hit.transform?.GetComponent<Enemy>();
-                    Debug.Log(hit.transform?.name);
+                    Enemy enemy = hit.transform.GetComponent<Enemy>();
+                    Debug.Log("YO");
                     if (enemy != null)
                     {
                         enemy.TakeDamage(gunData.damage);
@@ -109,6 +117,7 @@ public class Gun : MonoBehaviour
             }
         }
     }
+
 
     public void Update()
     {
