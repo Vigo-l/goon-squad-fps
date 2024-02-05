@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 
 public class Gun : MonoBehaviour
 {
-    [Header ("Objects")]
+    [Header("Objects")]
     public GunData gunData;
     public Transform cam;
 
@@ -19,14 +19,15 @@ public class Gun : MonoBehaviour
 
     public Dooranimation Dooranimation;
 
-    public float bulletSpeed = 10f;
-    public float maxBulletDistance = 50f;
+    public GameObject muzzleflash;
+
+
     public int enemyCount = 0;
     public static Action shootInput;
 
     public static Action reloadInput;
     public static Action inspectInput;
-
+    public float Muzzletime;
     public KeyCode reloadkey;
     public KeyCode inspectkey;
     public int requiredEnemyCount = 5;
@@ -45,30 +46,31 @@ public class Gun : MonoBehaviour
         door.SetActive(false);
         weaponAnimator = GameObject.FindGameObjectWithTag("WeaponHolder")?.GetComponent<Animator>();
         currentScene = SceneManager.GetActiveScene().name;
+        muzzleflash.SetActive(false);
     }
 
     public void StartReload()
     {
-            StartCoroutine(Reload());
+        StartCoroutine(Reload());
     }
     public void StartInspect()
     {
 
-            StartCoroutine(Inspect());
+        StartCoroutine(Inspect());
 
     }
 
     private IEnumerator Reload()
     {
-            gunData.reloading = true;
-            weaponAnimator?.SetBool("reloading", true);
+        gunData.reloading = true;
+        weaponAnimator?.SetBool("reloading", true);
 
-            yield return new WaitForSeconds(gunData.reloadTime);
+        yield return new WaitForSeconds(gunData.reloadTime);
 
-            gunData.currentAmmo = gunData.magSize;
+        gunData.currentAmmo = gunData.magSize;
 
-            gunData.reloading = false;
-            weaponAnimator?.SetBool("reloading", false);
+        gunData.reloading = false;
+        weaponAnimator?.SetBool("reloading", false);
     }
     private IEnumerator Inspect()
     {
@@ -93,6 +95,7 @@ public class Gun : MonoBehaviour
         {
             if (CanShoot())
             {
+                OnGunShot();
                 if (Physics.Raycast(cam.position, cam.transform.forward, out hit, gunData.maxDistance))
                 {
                     Enemy enemy = hit.transform.GetComponent<Enemy>();
@@ -100,6 +103,7 @@ public class Gun : MonoBehaviour
                     if (enemy != null)
                     {
                         enemy.TakeDamage(gunData.damage);
+                        
                     }
                 }
                 gunData.currentAmmo--;
@@ -136,4 +140,18 @@ public class Gun : MonoBehaviour
             StartInspect();
         }
     }
+    public void OnGunShot()
+    {
+        Gunshot.Play();
+        StartCoroutine(muzzleFlash());
+    }
+
+    private IEnumerator muzzleFlash()
+    {
+        muzzleflash.SetActive(true);
+        yield return new WaitForSeconds(Muzzletime);
+        muzzleflash.SetActive(false);
+
+    }
+
     }
